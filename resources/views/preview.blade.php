@@ -1,0 +1,7 @@
+<html>
+
+<body>
+  <img src="{{ $image }}">
+</body>
+
+</html>

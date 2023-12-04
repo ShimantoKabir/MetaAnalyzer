@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\WebPage\Controllers\MetaAnalyzerController;
+use App\WebPage\Middlewares\WebPageRequestValidatorMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get("/test", function () {
+    return "App running...!";
 });
+
+Route::post("webpage/analyze", [MetaAnalyzerController::class, "analyzeMetaData"])
+    ->middleware(WebPageRequestValidatorMiddleware::class);
+
+Route::post("webpage/preview", [MetaAnalyzerController::class, "createPreview"])
+    ->middleware(WebPageRequestValidatorMiddleware::class);

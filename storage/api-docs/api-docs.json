@@ -1,0 +1,75 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Meta data analyzer API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/MetaAnalyzer/public/api/webpage/analyze": {
+            "post": {
+                "tags": [
+                    "Analyze Meta Data"
+                ],
+                "summary": "Analyze meta data of a webpage",
+                "operationId": "analyze-metadata",
+                "requestBody": {
+                    "description": "Analyze webpage meta data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WebpageDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/MetaAnalyzer/public/api/webpage/preview": {
+            "post": {
+                "tags": [
+                    "Create Preview Image"
+                ],
+                "summary": "Create preview image of a webpage",
+                "operationId": "preview-image",
+                "requestBody": {
+                    "description": "Create preview image",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WebpageDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "WebpageDto": {
+                "title": "Web Page Request dto",
+                "description": "Web Page Request dto",
+                "properties": {
+                    "url": {
+                        "title": "URL",
+                        "description": "A URL need to capture all meta data and analyze or create preview image.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
