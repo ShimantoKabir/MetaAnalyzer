@@ -7,7 +7,7 @@ use App\WebPage\Models\Metadata;
 
 class MetadataMapper
 {
-  public function modelToDto(Metadata $metadata)
+  public function modelToDto(Metadata $metadata): MetadataDto
   {
     $metadataDto = new MetadataDto();
 

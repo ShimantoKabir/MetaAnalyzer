@@ -1,23 +1,22 @@
 <?php
 
-namespace App\WebPage\mappers;
+namespace App\WebPage\Mappers;
 
 use App\WebPage\Dtos\WebpageDto;
-use App\WebPage\mappers\WebPageMapper;
 use Illuminate\Http\Request;
 
 class MetaAnalyzerRequestBuilder
 {
 
-  private WebPageMapper $webPageMapper;
+  private WebpageMapper $webpageMapper;
 
-  public function __construct(WebPageMapper $webPageMapper)
+  public function __construct(WebpageMapper $webPageMapper)
   {
-    $this->webPageMapper = $webPageMapper;
+    $this->webpageMapper = $webPageMapper;
   }
 
   public function toRequestDto(Request $request): WebpageDto
   {
-    return $this->webPageMapper->requestToDto($request);
+    return $this->webpageMapper->requestToDto($request);
   }
 }

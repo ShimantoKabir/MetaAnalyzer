@@ -60,7 +60,7 @@ class MetaAnalyzerService
     return $this->generateAnalysisReport($this->metadataMapper->modelToDto($webpage->metadata));
   }
 
-  function updateAllMetadata()
+  function updateAllMetadata(): void
   {
     $webpages = $this->webpageRepository->findAll();
 
@@ -80,46 +80,46 @@ class MetaAnalyzerService
     $analysisReport = new AnalysisReportDto();
 
     if ($metadataDto->title == null) {
-      array_push($analysisReport->issues, "No title found!");
+      $analysisReport->issues[] = "No title found!";
     }
 
     if ($metadataDto->title != null && $this->isRepeatingWordFound($metadataDto->title)) {
-      array_push($analysisReport->issues, "Repeated word found in title!");
+      $analysisReport->issues[] = "Repeated word found in title!";
     }
 
     if ($metadataDto->description == null) {
-      array_push($analysisReport->issues, "No description found!");
+      $analysisReport->issues[] = "No description found!";
     }
 
     if ($metadataDto->description != null && $this->isRepeatingWordFound($metadataDto->description)) {
-      array_push($analysisReport->issues, "Repeated word found in description!");
+      $analysisReport->issues[] = "Repeated word found in description!";
     }
 
     if ($metadataDto->viewport == null) {
-      array_push($analysisReport->issues, "No viewport found!");
+      $analysisReport->issues[] = "No viewport found!";
     }
 
     if ($metadataDto->robots == null) {
-      array_push($analysisReport->issues, "No robots text found!");
+      $analysisReport->issues[] = "No robots text found!";
     }
 
     if ($metadataDto->charset == null) {
-      array_push($analysisReport->issues, "No charset found!");
+      $analysisReport->issues[] = "No charset found!";
     }
 
     if ($metadataDto->totalTile > 1) {
-      array_push($analysisReport->issues, "Title mentioned more than one!");
+      $analysisReport->issues[] = "Title mentioned more than one!";
     }
 
     if ($metadataDto->totalDescription > 1) {
-      array_push($analysisReport->issues, "Description mentioned more than one!");
+      $analysisReport->issues[] = "Description mentioned more than one!";
     }
 
-    if ($metadataDto->httpEquivRefreshPresent == true) {
-      array_push($analysisReport->issues, "Page shouldn't refresh more than one!");
+    if ($metadataDto->httpEquivRefreshPresent) {
+      $analysisReport->issues[] = "Page shouldn't refresh more than one!";
     }
 
-    $analysisReport->isIssueFound = count($analysisReport->issues) == 0 ? false : true;
+    $analysisReport->isIssueFound = !(count($analysisReport->issues) == 0);
     $analysisReport->message = count($analysisReport->issues) == 0 ? "No issue found!" : "Issue found!";
 
     Log::info("SEO issue report generated!");

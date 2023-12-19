@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('webpages', function (Blueprint $table) {
             $table->id();
             $table->string('url')->unique();
-            $table->text("previewImage")->nullable();
+            $table->longText("previewImage")->nullable();
             $table->timestamps();
         });
     }

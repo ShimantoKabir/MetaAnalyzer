@@ -6,6 +6,8 @@ use App\WebPage\Models\Webpage;
 use App\WebPage\Dtos\WebpageDto;
 use Illuminate\Database\Eloquent\Collection;
 use App\WebPage\Repositories\WebpageRepository;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 
 class IWebpageRepository implements WebpageRepository
 {
@@ -41,4 +43,30 @@ class IWebpageRepository implements WebpageRepository
   {
     return Webpage::all();
   }
+
+    function findWithPagination() : Paginator
+    {
+        return Webpage::select(
+            DB::raw(
+                'id,
+                url,
+                IF(ISNULL(previewImage), "N/A", "AVAILABLE") AS previewImage,
+                created_at,
+                updated_at'
+            )
+        )
+        ->with("metadata")
+        ->simplePaginate(5);
+    }
+
+    function getPreviewImage(int $id): string|null
+    {
+        $webpage = Webpage::find($id);
+
+        if ($webpage == null){
+            return null;
+        }else {
+            return  $webpage->previewImage;
+        }
+    }
 }

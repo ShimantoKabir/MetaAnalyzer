@@ -2,7 +2,6 @@
 
 namespace App\WebPage\Models;
 
-use App\WebPage\Models\Webpage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -15,4 +14,5 @@ class Metadata extends Model
     {
         return $this->hasOne(Webpage::class, "webpageId");
     }
+
 }

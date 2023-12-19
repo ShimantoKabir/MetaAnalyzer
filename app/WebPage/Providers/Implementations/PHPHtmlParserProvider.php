@@ -5,11 +5,23 @@ namespace App\WebPage\Providers\Implementations;
 use PHPHtmlParser\Dom;
 use App\WebPage\Dtos\MetadataDto;
 use App\WebPage\Providers\MetadataProvider;
+use PHPHtmlParser\Exceptions\ChildNotFoundException;
+use PHPHtmlParser\Exceptions\CircularException;
+use PHPHtmlParser\Exceptions\CurlException;
+use PHPHtmlParser\Exceptions\NotLoadedException;
+use PHPHtmlParser\Exceptions\StrictException;
 
 class PHPHtmlParserProvider implements MetadataProvider
 {
 
-  function provideByURL(string $url): MetadataDto
+    /**
+     * @throws CurlException
+     * @throws ChildNotFoundException
+     * @throws NotLoadedException
+     * @throws CircularException
+     * @throws StrictException
+     */
+    function provideByURL(string $url): MetadataDto
   {
     $metadataDto = new MetadataDto();
     $metadataDto->totalDescription = 0;

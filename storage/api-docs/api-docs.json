@@ -5,7 +5,7 @@
         "version": "0.1"
     },
     "paths": {
-        "/MetaAnalyzer/public/api/webpage/analyze": {
+        "/api/webpages/analyze": {
             "post": {
                 "tags": [
                     "Analyze Meta Data"
@@ -30,7 +30,7 @@
                 }
             }
         },
-        "/MetaAnalyzer/public/api/webpage/preview": {
+        "/api/webpages/preview": {
             "post": {
                 "tags": [
                     "Create Preview Image"
@@ -48,6 +48,64 @@
                         }
                     }
                 },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/webpages/paginate": {
+            "get": {
+                "tags": [
+                    "Get all webpage and metadata"
+                ],
+                "summary": "Get all webpage and metadata info with pagination",
+                "operationId": "webpage-metadata",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/webpages/metadata/update-all": {
+            "get": {
+                "tags": [
+                    "Update all metadata"
+                ],
+                "summary": "Update all metadata",
+                "operationId": "update-all-metadata",
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/webpages/preview/{id}": {
+            "get": {
+                "tags": [
+                    "Display preview image"
+                ],
+                "summary": "Display preview image by webpage id",
+                "operationId": "display-preview-image",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Webpage id",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "400": {
                         "description": "Bad Request"

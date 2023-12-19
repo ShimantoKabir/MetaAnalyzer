@@ -2,31 +2,50 @@
 
 namespace App\WebPage\Providers\Implementations;
 
+use App\WebPage\Types\EnvType;
+use Exception;
+use Illuminate\Support\Facades\Config;
 use Screen\Capture;
 use App\WebPage\Providers\PreviewProvider;
+use Screen\Exceptions\PhantomJsException;
 
 class MicroweberPreviewProvider implements PreviewProvider
 {
 
-  function providePreviewImage(string $url): string
-  {
-    $imageName = time() . '.jpg';
+    /**
+     * @throws PhantomJsException
+     * @throws Exception
+     */
+    function providePreviewImage(string $url): string
+    {
+        $imageName = time() . '.jpg';
 
-    $screenCapture = new Capture($url);
+        $screenCapture = new Capture($url);
 
-    $screenCapture->setWidth(1200);
-    $screenCapture->setHeight(800);
+        $screenCapture->setClipWidth(1440);
+        $screenCapture->setClipHeight(800);
 
-    $screenCapture->output->setLocation(public_path());
-    $screenCapture->save($imageName);
+        $envType = Config::get("env.envType");
 
-    $imageFile = public_path() . "\\" . $imageName;
-    $imageData = file_get_contents($imageFile);
+        if ($envType == EnvType::PROD->value){
+            $screenCapture->setBinPath(resource_path());
+        }
 
-    $base64Data = "data:image/jpg;charset=utf8;base64," . base64_encode($imageData);
+        $screenCapture->setOptions([
+            'ignore-ssl-errors' => 'yes'
+        ]);
 
-    unlink($imageFile);
+        $screenCapture->output->setLocation(storage_path());
+        $screenCapture->save($imageName);
 
-    return $base64Data;
-  }
+        $imageFile = storage_path() . "/" . $imageName;
+        $imageData = file_get_contents($imageFile);
+
+        $base64Data = "data:image/jpg;charset=utf8;base64," . base64_encode($imageData);
+
+        unlink($imageFile);
+        $screenCapture->jobs->clean();
+
+        return $base64Data;
+    }
 }

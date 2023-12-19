@@ -1,6 +1,6 @@
 <?php
 
-namespace App\WebPage\mappers;
+namespace App\WebPage\Mappers;
 
 use App\WebPage\Dtos\WebpageDto;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class WebpageMapper
 
     $url = $object->url;
 
-    if (substr($url, -1) != "/") {
+    if (!str_ends_with($url, "/")) {
       $url = $url . "/";
     }
 
