@@ -17,4 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/meta-analyzer-db
+/meta-analyzer-dbdd
+/resources/phantomjs
